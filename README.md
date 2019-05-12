@@ -7,9 +7,9 @@ To compensate for differences in required brightness settings between fixtures, 
 
 3 Environmental Variables must be defined:
 
-leviton_username=[String]
-leviton_password=[String]
-leviton_percent=[Integer 0-100]
+- leviton_username=[String]
+- leviton_password=[String]
+- leviton_percent=[Integer 0-100]
 Note: For security purposes, pass these variables through a file using env-file in the run command
 
 This docker uses the api for the MyLeviton app and does not require any open ports nor any direct communication with any of the switches to be controlled. On launch, the current day/night mode will be applied to all switches. This docker uses sunwait to determine the times for sunrise and sunset.
