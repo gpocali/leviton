@@ -1,4 +1,4 @@
-# leviton
+# gpocali/leviton Docker
 Docker to turn on MyLeviton switches at night and off during the day at a user defined brightness
 
 This docker is used to control MyLeviton switches and turn lights on at sunset and off at sunrise at a user defined brightness. This will control all switches on the account and will set them to the same defined brightness. The sunset and sunrise times are based on the location specified in the MyLeviton app. This was created to fill a gap in the scheduling function of the MyLeviton app that does not observe a brightness level when automatically turning lights on and off on a schedule.
