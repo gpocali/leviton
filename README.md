@@ -38,6 +38,7 @@ leviton_password=1234password
 leviton_percent=10
 sunwait_twilight="angle 10"
 sunwait_offset=5
+
 ```
 
 This docker is currently in Beta, meaning that while core functionality has been tested, there is potential for bugs or anomalies that were not anticipated being present in runtime that may cause the docker to exit unexpectedly. While this poses no threat to the function of your devices, if the docker is not configured to auto-restart, it may fail to turn on or off your fixtures at the expected times. There is no warranty or guarantees expressed or implied with the use of this docker or its constituent code.

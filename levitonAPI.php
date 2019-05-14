@@ -24,9 +24,11 @@ if($error){
 
 // Optional Environmental Variables
 $TWILIGHT = getenv("sunwait_twilight");
-if($TWILIGHT === false || $TWILIGHT != "daylight" && $TWILIGHT != "civil" && $TWILIGHT != "nautical" && $TWILIGHT != "astronomical" && strpos($TWILIGHT, "angle") === false ){
-	echo "Defaulting to 'daylight' twilight.\n";
-	$TWILIGHT = "daylight";
+if($TWILIGHT === false){
+	if($TWILIGHT != "daylight" && $TWILIGHT != "civil" && $TWILIGHT != "nautical" && $TWILIGHT != "astronomical" && strpos($TWILIGHT, "angle") === false ){
+		echo "Defaulting to 'daylight' twilight.\n";
+		$TWILIGHT = "daylight";
+	}
 }
 
 $OFFSET = getenv("sunwait_offset");
