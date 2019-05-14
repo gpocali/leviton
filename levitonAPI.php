@@ -22,7 +22,23 @@ if($error){
 	exit;
 }
 
-if(trim(shell_exec("ps -aux | grep ".$argv[0]." start | grep -v grep | wc -l")) > 1){
+// Optional Environmental Variables
+$TWILIGHT = getenv("sunwait_twilight");
+if($TWILIGHT === false || $TWILIGHT != "daylight" && $TWILIGHT != "civil" && $TWILIGHT != "nautical" && $TWILIGHT != "astronomical" && strpos($TWILIGHT, "angle") === false ){
+	echo "Defaulting to 'daylight' twilight.\n";
+	$TWILIGHT = "daylight";
+}
+
+$OFFSET = getenv("sunwait_offset");
+if($OFFSET === false){
+	$OFFSET = "";
+} else {
+	$OFFSET = "offset ".$OFFSET;
+}
+
+
+// Verify that there is not another instance running that could cause a conflict or waisted resources
+if(trim(shell_exec("ps -aux | grep '".$argv[0]." start' | grep -v grep | wc -l")) > 1){
         echo "There is another instance already running, exiting.\n";
         exit;
 }
@@ -31,6 +47,7 @@ if(!isset($argv[1])){
         echo "Argument Required.\n";
         exit;
 }
+
 function lev_request($api, $body, $method, $sessionId = null){
         global $LEVITON_ROOT;
         $uri = $LEVITON_ROOT.$api;
@@ -155,7 +172,7 @@ $perm = lev_residential_permissions($session);
 $residences = lev_residences($session, $perm[0]['residentialAccountId']);
 echo "Selected Residence: ".$residences[0]['name']." (".$residences[0]['geopoint']['lat'].", ".$residences[0]['geopoint']['lng'].")\n";
 if($launch){
-	$current = shell_exec("sunwait poll daylight ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E");
+	$current = shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET." ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E");
 	$switches = lev_iot_switches($session, $residences[0]['id']);
 	foreach($switches as $switch){
 		if($current == "NIGHT"){
@@ -177,12 +194,12 @@ if($launch){
 	while(true){
 		//Run at noon and midnight
 		if(date("H")%12 == 0 && date("H") != $lastHour){
-			if(shell_exec("sunwait poll daylight ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E") == "NIGHT"){
+			if(shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET." ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E") == "NIGHT"){
 				//NIGHT - Turn Off Light at sunrise
-				echo shell_exec("sunwait wait rise ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." 0");
+				echo shell_exec("sunwait wait ".$TWILIGHT." rise ".$OFFSET." ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." 0");
 			} else {
 				//Day - Turn On Light at sunset
-				echo shell_exec("sunwait wait set ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." ".$ONPERCENT);
+				echo shell_exec("sunwait wait ".$TWILIGHT." set ".$OFFSET." ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." ".$ONPERCENT);
 			}
 			$lastHour = date("H");
 		}
