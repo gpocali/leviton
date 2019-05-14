@@ -11,13 +11,13 @@ To compensate for differences in required brightness settings between fixtures, 
 - leviton_percent=[ Integer 0-100 ]
 ### Optional Environmental Variables (Use quotes as required):
 - sunwait_twilight=[ daylight | civil | nautical | astronomical | angle [#.##] ]
--- daylight - Top of sun just below the horizon. Default.
--- civil - Civil Twilight. -6 degrees below horizon.
--- nautical - Nautical twilight. -12 degrees below horizon.
--- astronomical - Astronomical twilight. -18 degrees below horizon.
--- angle [X.XX] - User-specified twilight-angle (degrees). Default: 0.
+  - daylight - Top of sun just below the horizon. Default.
+  - civil - Civil Twilight. -6 degrees below horizon.
+  - nautical - Nautical twilight. -12 degrees below horizon.
+  - astronomical - Astronomical twilight. -18 degrees below horizon.
+  - angle [X.XX] - User-specified twilight-angle (degrees). Default: 0.
 - sunwait_offset=[MM|HH:MM]
--- Time interval (+ is later, minus is earlier) to adjust twilight calculation.
+  - Time interval (+ is later, minus is earlier) to adjust twilight calculation.
 
 Note: For security purposes, pass these variables through a file using env-file in the run command
 
