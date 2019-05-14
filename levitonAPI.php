@@ -33,7 +33,7 @@ $OFFSET = getenv("sunwait_offset");
 if($OFFSET === false){
 	$OFFSET = "";
 } else {
-	$OFFSET = "offset ".$OFFSET;
+	$OFFSET = "offset ".$OFFSET." ";
 }
 
 
@@ -172,10 +172,10 @@ $perm = lev_residential_permissions($session);
 $residences = lev_residences($session, $perm[0]['residentialAccountId']);
 echo "Selected Residence: ".$residences[0]['name']." (".$residences[0]['geopoint']['lat'].", ".$residences[0]['geopoint']['lng'].")\n";
 if($launch){
-	$current = shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET." ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E");
+	$current = shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E");
 	$switches = lev_iot_switches($session, $residences[0]['id']);
 	foreach($switches as $switch){
-		if($current == "NIGHT"){
+		if(trim($current) == "NIGHT"){
 			//Night - Turn Switch On
 			$state = "ON";
 			$percent = $ONPERCENT;
@@ -194,12 +194,12 @@ if($launch){
 	while(true){
 		//Run at noon and midnight
 		if(date("H")%12 == 0 && date("H") != $lastHour){
-			if(shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET." ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E") == "NIGHT"){
+			if(shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E") == "NIGHT"){
 				//NIGHT - Turn Off Light at sunrise
-				echo shell_exec("sunwait wait ".$TWILIGHT." rise ".$OFFSET." ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." 0");
+				echo shell_exec("sunwait wait ".$TWILIGHT." rise ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." 0");
 			} else {
 				//Day - Turn On Light at sunset
-				echo shell_exec("sunwait wait ".$TWILIGHT." set ".$OFFSET." ".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." ".$ONPERCENT);
+				echo shell_exec("sunwait wait ".$TWILIGHT." set ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." ".$ONPERCENT);
 			}
 			$lastHour = date("H");
 		}
