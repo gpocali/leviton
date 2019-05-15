@@ -187,7 +187,7 @@ if($launch){
 			$percent = 0;
 		}
 		if($switch['power'] != $state || $switch['brightness'] != $percent){
-			echo "Turning switch ".$switch['name']." ".$state." at ".$percent."%\n";
+			echo date("m-d-Y H:i.s T")." - Turning switch ".$switch['name']." ".$state." at ".$percent."%\n";
 			lev_update_switch($session, $switch['id'], $state, $percent);
 		}
 	}
@@ -198,10 +198,10 @@ if($launch){
 		if(date("H")%12 == 0 && date("H") != $lastHour){
 			if(trim(shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E")) == "NIGHT"){
 				//NIGHT - Turn Off Light at sunrise
-				echo shell_exec("sunwait wait ".$TWILIGHT." rise ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." 0");
+				echo shell_exec("sunwait wait rise ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." 0");
 			} else {
 				//Day - Turn On Light at sunset
-				echo shell_exec("sunwait wait ".$TWILIGHT." set ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." ".$ONPERCENT);
+				echo shell_exec("sunwait wait set ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." ".$ONPERCENT);
 			}
 			$lastHour = date("H");
 		}
@@ -214,7 +214,7 @@ if($launch){
 $switches = lev_iot_switches($session, $residences[0]['id']);
 
 foreach($switches as $switch){
-        echo "Turning switch ".$switch['name']." ".$state." at ".$percent."%\n";
+        echo date("m-d-Y H:i.s T")." - Turning switch ".$switch['name']." ".$state." at ".$percent."%\n";
         lev_update_switch($session, $switch['id'], $state, $percent);
 }
 lev_logout($session);
