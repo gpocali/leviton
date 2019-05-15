@@ -15,7 +15,7 @@ To compensate for differences in required brightness settings between fixtures, 
   - civil - Civil Twilight. -6 degrees below horizon.
   - nautical - Nautical twilight. -12 degrees below horizon.
   - astronomical - Astronomical twilight. -18 degrees below horizon.
-  - angle [X.XX] - User-specified twilight-angle (degrees). Default: 0.
+  - angle [X.XX] - User-specified twilight-angle (degrees), decimal optional. Default: 0.
 - sunwait_offset=[MM|HH:MM]
   - Time interval (+ is later, minus is earlier) to adjust twilight calculation.
 
