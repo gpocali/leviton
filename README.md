@@ -5,11 +5,11 @@ This docker is used to control MyLeviton switches and turn lights on at sunset a
 
 To compensate for differences in required brightness settings between fixtures, set the leviton_percent variable to the lowest value of all fixtures, and then set the minimum brightness level in the MyLeviton App for fixtures that require a higher brightness. This will make those fixtures that require a higher setting automatically adjust to that setting instead of the one defined.
 
-## 3 Environmental Variables must be defined (Use quotes as required):
+## 3 Environmental Variables must be defined:
 - leviton_username=[ String ]
 - leviton_password=[ String ]
 - leviton_percent=[ Integer 0-100 ]
-### Optional Environmental Variables (Use quotes as required):
+### Optional Environmental Variables:
 - sunwait_twilight=[ daylight | civil | nautical | astronomical | angle [#.##] ]
   - daylight - Top of sun just below the horizon. Default.
   - civil - Civil Twilight. -6 degrees below horizon.
@@ -27,16 +27,17 @@ This docker uses the api for the MyLeviton app and does not require any open por
 - Configuration generator
 - Individual device selection
 - Individual device brightness
-- (Done) Global time offset
-- (Done) Selection between civil, nautical, astronomical sunset/sunrise
+- (Done not tested) Global time offset
+- (Almost done) Selection between civil, nautical, astronomical sunset/sunrise
 - (Done) Create docker with source code and enable autobuild
+- When beta branch is stable, move development to dev branch
 
 ## Example Environmental Variables File
 ```
 leviton_username=userEmail@noreply.com
 leviton_password=1234password
 leviton_percent=10
-sunwait_twilight="angle 10"
+sunwait_twilight=angle 10
 sunwait_offset=5
 
 ```
