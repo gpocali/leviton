@@ -32,7 +32,7 @@ if($TWILIGHT === false){
 		echo "Defaulting to 'daylight' twilight.\n";
 		$TWILIGHT = "daylight";
 	} else {
-		echo "Twilight Mode: ".$TWILIGHT."\n";
+		echo " Twilight Mode: ".$TWILIGHT."\n";
 	}
 }
 
@@ -40,7 +40,7 @@ $OFFSET = getenv("sunwait_offset");
 if($OFFSET === false){
 	$OFFSET = "";
 } else {
-	echo "Offset: ".$OFFSET."\n";
+	echo " Offset: ".$OFFSET."\n";
 	$OFFSET = "offset ".$OFFSET." ";
 }
 
