@@ -201,7 +201,7 @@ if($launch){
 	$lastHour = -1;
 	while(true){
 		//Run at noon and midnight
-		if(date("H")%12 == 0 && date("H") != $lastHour){
+		if(date("H")%12 == 0 && date("H") != $lastHour || $launch){
 			if(trim(shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E")) == "NIGHT"){
 				//NIGHT - Turn Off Light at sunrise
 				echo shell_exec("sunwait wait rise ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." 0");
@@ -210,6 +210,7 @@ if($launch){
 				echo shell_exec("sunwait wait set ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." ".$ONPERCENT);
 			}
 			$lastHour = date("H");
+			$launch = false;
 		}
 		//Sleep 30 Minutes
 		sleep(1800);
