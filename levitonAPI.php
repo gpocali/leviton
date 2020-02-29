@@ -202,6 +202,7 @@ if($launch){
 	while(true){
 		//Run at noon and midnight
 		if(date("H")%12 == 0 && date("H") != $lastHour || $launch){
+			echo "Today's Sunrise and Sunset Times: ".shell_exec("sunwait list ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E");
 			if(trim(shell_exec("sunwait poll ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E")) == "NIGHT"){
 				//NIGHT - Turn Off Light at sunrise
 				echo shell_exec("sunwait wait rise ".$TWILIGHT." ".$OFFSET."".$residences[0]['geopoint']['lat']."N ".$residences[0]['geopoint']['lng']."E && ".$argv[0]." 0");
